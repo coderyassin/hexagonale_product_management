@@ -1,6 +1,7 @@
 package org.alten.product_management.application.port.input.api;
 
 import org.alten.product_management.application.adapter.input.controller.request.CreateProductRequest;
+import org.alten.product_management.application.adapter.input.controller.request.UpdateProductRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,9 @@ public interface ProductApi {
 
     @PostMapping
     ResponseEntity<?> createProduct(@RequestBody CreateProductRequest createProductRequest);
+
+    @PatchMapping(PRODUCT_ID)
+    ResponseEntity<?> updateProduct(@RequestBody UpdateProductRequest updateProductRequest, @PathVariable Long productId);
 
     @DeleteMapping(PRODUCT_ID)
     ResponseEntity<?> deleteProduct(@PathVariable Long productId);
