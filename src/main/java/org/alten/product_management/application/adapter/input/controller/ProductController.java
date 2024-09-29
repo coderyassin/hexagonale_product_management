@@ -7,6 +7,7 @@ import org.alten.product_management.application.adapter.input.controller.respons
 import org.alten.product_management.application.adapter.input.controller.response.UpdateProductResponse;
 import org.alten.product_management.application.common.mapper.ProductMapper;
 import org.alten.product_management.application.port.input.api.ProductApi;
+import org.alten.product_management.application.tracing.annotation.Loggable;
 import org.alten.product_management.domain.model.Product;
 import org.alten.product_management.domain.port.input.*;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Loggable
 public class ProductController implements ProductApi {
     private final CreateProductUseCase createProductUseCase;
     private final AllProductsUseCase allProductsUseCase;

@@ -18,8 +18,28 @@ logging:
   level:
     org.hibernate.SQL: info
     org.hibernate.type.descriptor.sql.BasicBinder: info
+  http:
+    response:
+      tracing-enabled: true
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+server:
+  description: local
+  address: localhost
+  request-protocol: http
+  port: 8080
+contact:
+  name: Yassin MELLOUKI
+  email: yassin.mellouki.j@gmail.com
+info:
+  title: Product management
+  version: 0.0.1-SNAPSHOT
+  description: Product management application.
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
