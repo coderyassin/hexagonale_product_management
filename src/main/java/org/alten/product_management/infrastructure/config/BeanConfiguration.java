@@ -11,7 +11,7 @@ public class BeanConfiguration {
 
     @Bean
     public AllProductsUseCase allProductsUseCase(AllProductsPort allProductsPort) {
-        return new AllProductService(allProductsPort);
+        return new AllProductsService(allProductsPort);
     }
 
     @Bean

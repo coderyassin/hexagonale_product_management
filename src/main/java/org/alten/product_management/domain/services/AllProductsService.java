@@ -11,10 +11,10 @@ import java.util.List;
 import static org.alten.product_management.domain.constant.ProductConstant.IS_NOT_PRESENT;
 import static org.alten.product_management.domain.constant.ProductConstant.REQUIRED_PARAMETER;
 
-public class AllProductService implements AllProductsUseCase {
+public class AllProductsService implements AllProductsUseCase {
     private final AllProductsPort allProductsPort;
 
-    public AllProductService(AllProductsPort allProductsPort) {
+    public AllProductsService(AllProductsPort allProductsPort) {
         this.allProductsPort = allProductsPort;
     }
 
