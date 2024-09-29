@@ -1,16 +1,11 @@
 package org.alten.product_management.infrastructure.config;
 
-import org.alten.product_management.domain.port.input.AllProductsUseCase;
-import org.alten.product_management.domain.port.input.CreateProductUseCase;
-import org.alten.product_management.domain.port.input.ProductByIdNotFoundUseCase;
-import org.alten.product_management.domain.port.input.ProductByIdUseCase;
+import org.alten.product_management.domain.port.input.*;
 import org.alten.product_management.domain.port.output.AllProductsPort;
 import org.alten.product_management.domain.port.output.CreateProductPort;
+import org.alten.product_management.domain.port.output.DeleteProductPort;
 import org.alten.product_management.domain.port.output.ProductByIdPort;
-import org.alten.product_management.domain.services.AllProductService;
-import org.alten.product_management.domain.services.CreateProductService;
-import org.alten.product_management.domain.services.ProductByIdNotFoundService;
-import org.alten.product_management.domain.services.ProductByIdService;
+import org.alten.product_management.domain.services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,6 +30,15 @@ public class BeanConfiguration {
     @Bean
     public CreateProductUseCase createProductUseCase(CreateProductPort createProductPort) {
         return new CreateProductService(createProductPort);
+    }
+
+    @Bean
+    public ProductNotCreatedUseCase productNotCreatedUseCase() {
+        return new ProductNotCreatedService();
+    }
+
+    @Bean DeleteProductUseCase deleteProductUseCase(DeleteProductPort deleteProductPort) {
+        return new DeleteProductService(deleteProductPort);
     }
 
 }

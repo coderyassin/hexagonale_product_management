@@ -18,4 +18,6 @@ public interface ProductApi {
     @PostMapping
     ResponseEntity<?> createProduct(@RequestBody CreateProductRequest createProductRequest);
 
+    @DeleteMapping(PRODUCT_ID)
+    ResponseEntity<?> deleteProduct(@PathVariable Long productId);
 }
