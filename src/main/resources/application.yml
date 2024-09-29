@@ -2,7 +2,7 @@ spring:
   application:
     name: product_management
   datasource:
-    url: jdbc:mysql://192.168.251.108:3306/product_management?autoReconnect=true
+    url: jdbc:mysql://192.168.199.108:3306/product_management?autoReconnect=true
     username: root
     password: rootpassword
     driver-class-name: com.mysql.cj.jdbc.Driver
