@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  mysql:
+  mysql-db:
     image: mysql:8.0
-    container_name: mysql
+    container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: product_management
@@ -24,12 +24,12 @@ services:
       dockerfile: Dockerfile
     container_name: product_management1
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product_management
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/product_management
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
       SERVER_PORT: 8080
     depends_on:
-      mysql:
+      mysql-db:
         condition: service_healthy
     networks:
       - backend
@@ -45,12 +45,12 @@ services:
       dockerfile: Dockerfile
     container_name: product_management2
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product_management
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/product_management
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
       SERVER_PORT: 8080
     depends_on:
-      mysql:
+      mysql-db:
         condition: service_healthy
     networks:
       - backend
