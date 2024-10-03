@@ -1,0 +1,25 @@
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore IDE configuration files
+*.idea
+*.vscode
+*.iml
+
+# Ignore log and build files
+logs/
+*.log
+
+# Ignore OS generated files
+*.swp
+*.DS_Store
+*.class
+
+# Ignore Maven and Gradle build directories
+target/
+build/
+
+# Ignore local dependencies and build configurations
+.mvn/
+.gradle/

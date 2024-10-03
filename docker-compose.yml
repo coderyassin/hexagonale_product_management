@@ -1,24 +1,82 @@
 version: '3.8'
 
 services:
-  mysql-db:
+  mysql:
     image: mysql:8.0
-    container_name: mysql-db
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: product_management
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
-      - my-network
+      - backend
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
+  product_management1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: product_management1
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product_management
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      SERVER_PORT: 8080
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  product_management2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: product_management2
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product_management
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      SERVER_PORT: 8080
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      product_management1:
+        condition: service_healthy
+      product_management2:
+        condition: service_healthy
+    networks:
+      - backend
+
+networks:
+  backend:
 
 volumes:
   mysql-data:
-
-networks:
-  my-network:
-    driver: bridge
