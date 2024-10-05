@@ -18,6 +18,8 @@ COPY --from=builder /app/target/*.jar /app/app.jar
 
 RUN apk update && apk add --no-cache curl
 
+#ENV SERVER_ENV_DEV_ADDRESS=192.168.63.108
+
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
