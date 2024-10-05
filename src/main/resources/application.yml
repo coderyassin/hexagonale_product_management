@@ -28,7 +28,7 @@ management:
         include: "*"
 server:
   description: local
-  address: localhost
+  address: 0.0.0.0
   request-protocol: http
   port: 8080
 contact:
