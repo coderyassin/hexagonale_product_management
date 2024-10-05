@@ -1,10 +1,4 @@
 services:
-  setup_env:
-    image: alpine:latest
-    volumes:
-      - ./home/yascode/scripts/create_env.sh:/app/create_env.sh
-    command: ["sh", "/app/create_env.sh"]
-
   mysql-db:
     image: mysql:8.0
     container_name: mysql-db
