@@ -13,10 +13,10 @@ import java.util.List;
 @Configuration
 public class OpenAPIConfiguration {
     @Bean
-    public OpenAPI defineOpenApi(@Value("${server.request-protocol}") String requestProtocol,
-                                 @Value("${server.address}") String address,
-                                 @Value("${server.port}") String port,
-                                 @Value("${server.description}") String serverDescription,
+    public OpenAPI defineOpenApi(@Value("${server.env.dev.request-protocol}") String requestProtocol,
+                                 @Value("${server.env.dev.address}") String address,
+                                 @Value("${server.env.dev.port}") String port,
+                                 @Value("${server.env.dev.description}") String serverDescription,
                                  @Value("${contact.name}") String name,
                                  @Value("${contact.email}") String email,
                                  @Value("${info.title}") String title,

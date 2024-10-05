@@ -27,10 +27,23 @@ management:
       exposure:
         include: "*"
 server:
-  description: local
-  address: 0.0.0.0
-  request-protocol: http
   port: 8080
+  env:
+    prod:
+      address: "**************"
+      port: "**************"
+      request-protocol: https
+      description: prod
+    preprod:
+      address: "**************"
+      port: "**************"
+      request-protocol: https
+      description: preprod
+    dev:
+      address: "**************"
+      port: "**************"
+      request-protocol: http
+      description: dev
 contact:
   name: Yassin MELLOUKI
   email: yassin.mellouki.j@gmail.com
