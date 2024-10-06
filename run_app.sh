@@ -55,7 +55,7 @@ EOL
 cd "$SCRIPT_DIR" || exit
 
 # Run the docker-compose up -d --build command
-docker-compose up -d --build
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml  up -d --build
 
 # Display a message indicating the completion
 echo "docker-compose up -d --build executed successfully"
