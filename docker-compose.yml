@@ -1,10 +1,11 @@
 services:
   mysql-db:
     image: mysql:8.0
-    container_name: mysql-db
+    container_name: product-management-db-c1
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: springbootdb
+      MYSQL_DATABASE: product-management-db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     volumes:
@@ -22,7 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: product_management1
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/springbootdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://product-management-db-c1:3306/product-management-db
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
       SERVER_PORT: 8080
@@ -35,7 +36,7 @@ services:
       - backend
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 20s
+      interval: 25s
       timeout: 5s
       retries: 5
 
@@ -45,7 +46,7 @@ services:
       dockerfile: Dockerfile
     container_name: product_management2
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/springbootdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://product-management-db-c1:3306/product-management-db
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
       SERVER_PORT: 8080
@@ -58,7 +59,7 @@ services:
       - backend
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 20s
+      interval: 25s
       timeout: 5s
       retries: 5
 
