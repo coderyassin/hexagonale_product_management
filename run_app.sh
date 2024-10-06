@@ -14,7 +14,7 @@ if [ "$#" -ne 1 ]; then
 fi
 
 CONFIG_DIR=$1
-CONFIG_FILE="$SCRIPT_DIR/config.conf"  # Path to the configuration file
+CONFIG_FILE="$CONFIG_DIR/config.conf"  # Path to the configuration file
 
 # Check if docker-compose.yml exists
 if [ ! -f "$DOCKER_COMPOSE_PATH" ]; then
