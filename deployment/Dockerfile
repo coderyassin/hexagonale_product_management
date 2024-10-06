@@ -2,11 +2,11 @@ FROM maven:3.9.4-eclipse-temurin-21 AS builder
 
 WORKDIR /app
 
-COPY ./pom.xml ./  
+COPY ../pom.xml ./
 
 RUN --mount=type=cache,target=/root/.m2 mvn dependency:go-offline -B
 
-COPY ./src ./src
+COPY ../src ./src
 
 RUN mvn package -DskipTests
 
