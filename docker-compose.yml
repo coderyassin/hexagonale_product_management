@@ -19,6 +19,46 @@ services:
       timeout: 5s
       retries: 10
 
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - backend
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  redis_insight:
+    image: redislabs/redisinsight:latest
+    container_name: redis_insight
+    restart: always
+    ports:
+      - 8001:8001
+    volumes:
+      - redis_insight_data:/db
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - backend
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8001" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
   product_management1:
     build:
       context: .
@@ -30,7 +70,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
     depends_on:
-      mysql-db:
+      redis_insight:
         condition: service_healthy
     networks:
       - backend
@@ -51,7 +91,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
     depends_on:
-      mysql-db:
+      redis_insight:
         condition: service_healthy
     networks:
       - backend
@@ -81,3 +121,8 @@ networks:
 
 volumes:
   mysql-data:
+    driver: local
+  redis_data:
+    driver: local
+  redis_insight_data:
+    driver: local
