@@ -32,17 +32,18 @@ services:
         condition: service_healthy
     networks:
       - backend
+    command: ["redis-server", "--appendonly", "yes"]
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 30s
 
   redis_insight:
-    image: redislabs/redisinsight:latest
+    image: redislabs/redisinsight:1.14.0
     container_name: redis_insight
-    restart: always
+    restart: on-failure
     ports:
       - 8001:8001
     volumes:
@@ -52,12 +53,20 @@ services:
         condition: service_healthy
     networks:
       - backend
+    environment:
+      - REDISINSIGHT_LOG_LEVEL=debug
+      - DISABLE_TELEMETRY=true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8001" ]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8001"]
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 40s
 
   product_management1:
     build:
@@ -70,7 +79,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
     depends_on:
-      redis_insight:
+      redis:
         condition: service_healthy
     networks:
       - backend
@@ -91,7 +100,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
     depends_on:
-      redis_insight:
+      redis:
         condition: service_healthy
     networks:
       - backend
@@ -118,11 +127,9 @@ services:
 
 networks:
   backend:
+    driver: bridge
 
 volumes:
   mysql-data:
-    driver: local
   redis_data:
-    driver: local
   redis_insight_data:
-    driver: local
