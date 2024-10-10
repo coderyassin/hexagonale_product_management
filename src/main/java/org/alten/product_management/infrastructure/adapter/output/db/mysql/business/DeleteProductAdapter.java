@@ -6,6 +6,7 @@ import org.alten.product_management.domain.port.output.DeleteProductPort;
 import org.alten.product_management.infrastructure.adapter.output.db.mysql.entity.ProductEntity;
 import org.alten.product_management.infrastructure.adapter.output.db.mysql.mapper.ProductMapper;
 import org.alten.product_management.infrastructure.adapter.output.db.mysql.repository.ProductRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class DeleteProductAdapter implements DeleteProductPort {
     }
 
     @Override
+    @CacheEvict(value = "users", key = "#productId")
     public Product deleteProduct(Long productId) {
         if (productRepository.existsById(productId)) {
             Optional<ProductEntity> productEntity = productRepository.findById(productId);
