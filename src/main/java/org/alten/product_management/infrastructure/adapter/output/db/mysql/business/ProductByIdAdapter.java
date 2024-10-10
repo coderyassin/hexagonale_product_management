@@ -4,6 +4,7 @@ import org.alten.product_management.domain.model.Product;
 import org.alten.product_management.domain.port.output.ProductByIdPort;
 import org.alten.product_management.infrastructure.adapter.output.db.mysql.mapper.ProductMapper;
 import org.alten.product_management.infrastructure.adapter.output.db.mysql.repository.ProductRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class ProductByIdAdapter implements ProductByIdPort {
     }
 
     @Override
+    @Cacheable(value = "users", key = "#productId")
     public Optional<Product> findById(Long productId) {
         return productRepository.findById(productId)
                 .map(productMapper::fromEntityToDomain);
