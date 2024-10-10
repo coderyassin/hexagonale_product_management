@@ -1,4 +1,10 @@
 services:
+  redis_insight:
+    env_file:
+      - .env_dev
+    environment:
+      SPRING_DATA_REDIS_HOST: ${REDIS_HOST}
+
   product_management1:
     env_file:
       - .env_dev

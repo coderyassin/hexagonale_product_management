@@ -62,6 +62,7 @@ MYSQL_USER=$MYSQL_USER
 MYSQL_PASSWORD=$MYSQL_PASSWORD
 DB_USER=$DB_USER
 DB_PASSWORD=$DB_PASSWORD
+REDIS_HOST=$VM_IP
 EOL
 
 # Navigate to the directory containing the docker-compose.yml
