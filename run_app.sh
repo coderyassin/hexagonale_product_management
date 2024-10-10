@@ -7,16 +7,29 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 DOCKER_COMPOSE_PATH="$SCRIPT_DIR/docker-compose.yml"
 ENV_PATH="$SCRIPT_DIR/.env"
 
-# Check if the required argument (directory path) is provided
-if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 <path_to_directory>"
+# Check if the required arguments (environment and config directory) are provided
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 <environment> <config_directory>"
+  echo "Example: $0 prod /path/to/config"
   exit 1
 fi
 
-CONFIG_DIR=$1
-CONFIG_FILE="$CONFIG_DIR/config.conf"  # Path to the configuration file
+# Capture the environment argument (prod, preprod, dev, etc.)
+ENVIRONMENT=$1
 
-# Check if docker-compose.yml exists
+# Check if the appropriate docker-compose file exists for the given environment
+DOCKER_COMPOSE_ENV_FILE="$SCRIPT_DIR/docker-compose.$ENVIRONMENT.yml"
+if [ ! -f "$DOCKER_COMPOSE_ENV_FILE" ]; then
+  echo "Error: docker-compose.$ENVIRONMENT.yml not found in $SCRIPT_DIR"
+  exit 1
+fi
+
+# Capture the configuration directory argument
+CONFIG_DIR=$2
+CONFIG_FILE="$CONFIG_DIR/config.conf"  # Path to the configuration file
+#CONFIG_FILE="/home/yascode/config/hexagonale_product_management/config.conf"
+
+# Check if the docker-compose.yml exists
 if [ ! -f "$DOCKER_COMPOSE_PATH" ]; then
   echo "Error: docker-compose.yml not found in $SCRIPT_DIR"
   exit 1
@@ -24,7 +37,7 @@ fi
 
 # Check if the configuration file exists
 if [ ! -f "$CONFIG_FILE" ]; then
-  echo "Error: Configuration file config.conf not found in $SCRIPT_DIR"
+  echo "Error: Configuration file config.conf not found in $CONFIG_DIR"
   exit 1
 fi
 
@@ -54,8 +67,8 @@ EOL
 # Navigate to the directory containing the docker-compose.yml
 cd "$SCRIPT_DIR" || exit
 
-# Run the docker-compose up -d --build command
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml  up -d --build
+# Run the docker-compose up command with the selected environment
+docker-compose -f docker-compose.yml -f docker-compose.$ENVIRONMENT.yml up -d --build
 
 # Display a message indicating the completion
-echo "docker-compose up -d --build executed successfully"
+echo "docker-compose up -d --build executed successfully for $ENVIRONMENT environment"
