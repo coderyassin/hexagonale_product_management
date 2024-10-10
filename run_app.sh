@@ -26,18 +26,19 @@ fi
 
 # Capture the configuration directory argument
 CONFIG_DIR=$2
-CONFIG_FILE="$CONFIG_DIR/config.conf"  # Path to the configuration file
-#CONFIG_FILE="/home/yascode/config/hexagonale_product_management/config.conf"
 
-# Check if the docker-compose.yml exists
-if [ ! -f "$DOCKER_COMPOSE_PATH" ]; then
-  echo "Error: docker-compose.yml not found in $SCRIPT_DIR"
-  exit 1
+# Select the appropriate configuration file based on the environment
+if [ "$ENVIRONMENT" == "prod" ]; then
+  CONFIG_FILE="$CONFIG_DIR/config_prod.conf"
+elif [ "$ENVIRONMENT" == "dev" ]; then
+  CONFIG_FILE="$CONFIG_DIR/config_dev.conf"
+else
+  CONFIG_FILE="$CONFIG_DIR/config.conf"
 fi
 
 # Check if the configuration file exists
 if [ ! -f "$CONFIG_FILE" ]; then
-  echo "Error: Configuration file config.conf not found in $CONFIG_DIR"
+  echo "Error: Configuration file $CONFIG_FILE not found in $CONFIG_DIR"
   exit 1
 fi
 
