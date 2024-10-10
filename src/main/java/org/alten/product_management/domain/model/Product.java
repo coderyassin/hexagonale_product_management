@@ -2,9 +2,10 @@ package org.alten.product_management.domain.model;
 
 import org.alten.product_management.domain.enums.InventoryStatus;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Product {
+public class Product implements Serializable {
     private Long id;
 
     private LocalDateTime createdAt;
