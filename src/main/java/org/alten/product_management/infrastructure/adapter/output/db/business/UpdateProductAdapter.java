@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 public class UpdateProductAdapter implements UpdateProductPort {
     private final UpdateProductService updateProductService;
 
-    public UpdateProductAdapter(@Qualifier("UpdateProductFromMySql") UpdateProductService updateProductService) {
+    public UpdateProductAdapter(@Qualifier("UpdateProductFromMongoDB")/*@Qualifier("UpdateProductFromMySql")*/
+                                UpdateProductService updateProductService) {
         this.updateProductService = updateProductService;
     }
 

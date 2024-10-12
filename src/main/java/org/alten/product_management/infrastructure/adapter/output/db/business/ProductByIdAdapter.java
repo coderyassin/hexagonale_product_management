@@ -12,7 +12,8 @@ import java.util.Optional;
 public class ProductByIdAdapter implements ProductByIdPort {
     private final ProductByIdService productByIdService;
 
-    public ProductByIdAdapter(@Qualifier("ProductByIdFromMySql") ProductByIdService productByIdService) {
+    public ProductByIdAdapter(@Qualifier("ProductByIdFromMongoDB")/*@Qualifier("ProductByIdFromMySql")*/
+                              ProductByIdService productByIdService) {
         this.productByIdService = productByIdService;
     }
 

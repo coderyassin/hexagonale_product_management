@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 public class CreateProductAdapter implements CreateProductPort {
     private final CreateProductService createProductService;
 
-    public CreateProductAdapter(@Qualifier("CreateProductFromMySql") CreateProductService createProductService) {
+    public CreateProductAdapter(@Qualifier("CreateProductFromMongoDB")/*@Qualifier("CreateProductFromMySql")*/
+                                CreateProductService createProductService) {
         this.createProductService = createProductService;
     }
 

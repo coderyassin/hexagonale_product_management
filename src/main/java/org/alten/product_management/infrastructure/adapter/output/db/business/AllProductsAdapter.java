@@ -12,7 +12,8 @@ import java.util.List;
 public class AllProductsAdapter implements AllProductsPort {
     private final AllProductsService allProductsService;
 
-    public AllProductsAdapter(@Qualifier("AllProductsFromMySql") AllProductsService allProductsService) {
+    public AllProductsAdapter(@Qualifier("AllProductsFromMongoDB") /*@Qualifier("AllProductsFromMySql")*/
+                              AllProductsService allProductsService) {
         this.allProductsService = allProductsService;
     }
 

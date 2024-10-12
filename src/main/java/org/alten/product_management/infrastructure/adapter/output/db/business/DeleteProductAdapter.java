@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 public class DeleteProductAdapter implements DeleteProductPort {
     private final DeleteProductService deleteProductService;
 
-    public DeleteProductAdapter(@Qualifier("DeleteProductFromMySql") DeleteProductService deleteProductService) {
+    public DeleteProductAdapter(@Qualifier("DeleteProductFromMongoDB")/*@Qualifier("DeleteProductFromMySql")*/
+                                DeleteProductService deleteProductService) {
         this.deleteProductService = deleteProductService;
     }
 
