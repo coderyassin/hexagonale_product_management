@@ -10,11 +10,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     mongodb:
-      uri: "**************"
+      authentication-database: "**************"
+      host: "**************"
       port: 27017
-      #database: "**************"
-      #username: "**************"
-      #password: "**************"
+      username: "**************"
+      password: "**************"
+      database: "**************"
+
     redis:
       host: "**************"
       port: 6379
