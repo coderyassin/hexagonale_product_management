@@ -41,6 +41,8 @@ services:
     depends_on:
       mysql-db:
         condition: service_healthy
+      mongodb:
+        condition: service_healthy
     networks:
       - backend
     command: ["redis-server", "--appendonly", "yes"]
@@ -92,8 +94,6 @@ services:
     depends_on:
       redis:
         condition: service_healthy
-      mongodb:
-        condition: service_healthy
     networks:
       - backend
     healthcheck:
@@ -115,8 +115,6 @@ services:
     depends_on:
       redis:
         condition: service_healthy
-      mongodb:
-       condition: service_healthy
     networks:
       - backend
     healthcheck:
