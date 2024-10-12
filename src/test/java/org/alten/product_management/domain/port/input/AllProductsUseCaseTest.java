@@ -26,10 +26,10 @@ public class AllProductsUseCaseTest {
     @Test
     void should_return_products() {
         Product product1 = new Product();
-        product1.setId(1L);
+        product1.setId("aqwzsxedc");
 
         Product product2 = new Product();
-        product2.setId(2L);
+        product2.setId("rgnthjuki");
 
         when(allProductsPort.allProducts()).thenReturn(List.of(product1, product2));
 
