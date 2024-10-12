@@ -23,7 +23,7 @@ spring:
         format_sql: true
         use_sql_comments: true
 app:
-  database: ${ACTIVE_DB:mysql}
+  database: "**************"
 logging:
   level:
     org.hibernate.SQL: info
