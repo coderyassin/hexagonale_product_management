@@ -111,6 +111,8 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+      product_management1:
+        condition: service_healthy
     networks:
       - backend
     healthcheck:
