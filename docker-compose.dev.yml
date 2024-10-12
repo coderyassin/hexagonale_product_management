@@ -35,7 +35,7 @@ services:
     env_file:
       - .env_dev
     environment:
-      SPRING_PROFILES_ACTIVE: dev
+      SPRING_PROFILES_ACTIVE: ${PROFILE_ACTIVE}
       APP_DATABASE: ${ACTIVE_DB}
       SPRING_DATASOURCE_URL: "jdbc:mysql://product-management-db-c1/${DB_NAME}"
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
