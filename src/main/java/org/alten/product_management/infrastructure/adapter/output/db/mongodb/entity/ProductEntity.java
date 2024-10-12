@@ -1,7 +1,9 @@
 package org.alten.product_management.infrastructure.adapter.output.db.mongodb.entity;
 
+import jakarta.persistence.EntityListeners;
 import lombok.*;
 import org.alten.product_management.domain.enums.InventoryStatus;
+import org.alten.product_management.infrastructure.adapter.output.db.mongodb.listener.ProductEntityListener;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -12,6 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @ToString
 @Builder
 @Document(collection = "products")
+@EntityListeners(ProductEntityListener.class)
 public class ProductEntity extends AbstractEntity {
 
     private String code;
