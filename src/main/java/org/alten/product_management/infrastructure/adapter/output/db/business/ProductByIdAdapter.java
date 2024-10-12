@@ -3,7 +3,6 @@ package org.alten.product_management.infrastructure.adapter.output.db.business;
 import org.alten.product_management.domain.model.Product;
 import org.alten.product_management.domain.port.output.ProductByIdPort;
 import org.alten.product_management.infrastructure.adapter.output.db.service.ProductByIdService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -12,8 +11,7 @@ import java.util.Optional;
 public class ProductByIdAdapter implements ProductByIdPort {
     private final ProductByIdService productByIdService;
 
-    public ProductByIdAdapter(/*@Qualifier("ProductByIdFromMongoDB") @Qualifier("ProductByIdFromMySql")*/
-                              ProductByIdService productByIdService) {
+    public ProductByIdAdapter(ProductByIdService productByIdService) {
         this.productByIdService = productByIdService;
     }
 

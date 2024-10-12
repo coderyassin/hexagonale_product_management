@@ -3,15 +3,13 @@ package org.alten.product_management.infrastructure.adapter.output.db.business;
 import org.alten.product_management.domain.model.Product;
 import org.alten.product_management.domain.port.output.CreateProductPort;
 import org.alten.product_management.infrastructure.adapter.output.db.service.CreateProductService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CreateProductAdapter implements CreateProductPort {
     private final CreateProductService createProductService;
 
-    public CreateProductAdapter(/*@Qualifier("CreateProductFromMongoDB") @Qualifier("CreateProductFromMySql")*/
-                                CreateProductService createProductService) {
+    public CreateProductAdapter(CreateProductService createProductService) {
         this.createProductService = createProductService;
     }
 
