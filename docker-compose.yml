@@ -15,7 +15,7 @@ services:
       retries: 10
 
   mongodb:
-    image: mongo:latest
+    image: arm64v8/mongo:4.4
     container_name: mongodb
     restart: always
     ports:
