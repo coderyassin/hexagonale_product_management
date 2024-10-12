@@ -6,10 +6,15 @@ import org.alten.product_management.infrastructure.adapter.output.db.mysql.entit
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 public class ProductListener {
     @PrePersist
     public void prePersist(ProductEntity entity) {
+        if (entity.getId() == null || entity.getId().isEmpty()) {
+            entity.setId(UUID.randomUUID().toString());
+        }
+
         if(Objects.isNull(entity.getCreatedAt())) {
             entity.setCreatedAt(LocalDateTime.now());
         }

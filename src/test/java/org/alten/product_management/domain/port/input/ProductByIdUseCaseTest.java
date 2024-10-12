@@ -25,13 +25,13 @@ public class ProductByIdUseCaseTest {
     @Test
     void should_return_product() {
         final Product product = new Product();
-        product.setId(1L);
+        product.setId("asczdvefb");
         product.setName("Name X");
         product.setDescription("Description X");
 
-        when(productByIdPort.findById(1L)).thenReturn(Optional.of(product));
+        when(productByIdPort.findById("asczdvefb")).thenReturn(Optional.of(product));
 
-        assertEquals("Name X", productByIdService.productById(1L).getName());
-        assertEquals("Description X", productByIdService.productById(1L).getDescription());
+        assertEquals("Name X", productByIdService.productById("asczdvefb").getName());
+        assertEquals("Description X", productByIdService.productById("asczdvefb").getDescription());
     }
 }

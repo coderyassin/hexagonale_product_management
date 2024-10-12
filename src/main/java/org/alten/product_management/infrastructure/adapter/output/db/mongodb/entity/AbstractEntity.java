@@ -1,13 +1,12 @@
-package org.alten.product_management.infrastructure.adapter.output.db.mysql.entity;
+package org.alten.product_management.infrastructure.adapter.output.db.mongodb.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -15,18 +14,14 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-public class AbstractEntity {
+public abstract class AbstractEntity {
+
     @Id
-    @Column(length = 36)
     private String id;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }

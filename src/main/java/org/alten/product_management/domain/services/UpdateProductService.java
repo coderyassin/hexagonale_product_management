@@ -12,7 +12,7 @@ public class UpdateProductService implements UpdateProductUseCase {
     }
 
     @Override
-    public Product updateProduct(Product product, Long productId) {
+    public Product updateProduct(Product product, String productId) {
         try {
             return updateProductPort.updateProduct(product, productId);
         } catch (Exception e) {

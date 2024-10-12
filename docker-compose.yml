@@ -5,11 +5,6 @@ services:
       - .env
     container_name: product-management-db-c1
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
@@ -18,6 +13,22 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 5s
       retries: 10
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - backend
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   redis:
     image: redis:latest
@@ -81,6 +92,8 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+      mongodb:
+        condition: service_healthy
     networks:
       - backend
     healthcheck:
@@ -102,6 +115,8 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+      mongodb:
+       condition: service_healthy
     networks:
       - backend
     healthcheck:
@@ -132,5 +147,6 @@ networks:
 
 volumes:
   mysql-data:
+  mongo_data:
   redis_data:
   redis_insight_data:

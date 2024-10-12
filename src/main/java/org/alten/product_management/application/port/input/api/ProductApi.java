@@ -14,14 +14,14 @@ public interface ProductApi {
     ResponseEntity<?> getProducts();
 
     @GetMapping(PRODUCT_ID)
-    ResponseEntity<?> getProduct(@PathVariable Long productId);
+    ResponseEntity<?> getProduct(@PathVariable String productId);
 
     @PostMapping
     ResponseEntity<?> createProduct(@RequestBody CreateProductRequest createProductRequest);
 
     @PatchMapping(PRODUCT_ID)
-    ResponseEntity<?> updateProduct(@RequestBody UpdateProductRequest updateProductRequest, @PathVariable Long productId);
+    ResponseEntity<?> updateProduct(@RequestBody UpdateProductRequest updateProductRequest, @PathVariable String productId);
 
     @DeleteMapping(PRODUCT_ID)
-    ResponseEntity<?> deleteProduct(@PathVariable Long productId);
+    ResponseEntity<?> deleteProduct(@PathVariable String productId);
 }

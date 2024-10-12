@@ -1,32 +1,30 @@
-package org.alten.product_management.infrastructure.adapter.output.db.mysql.business;
+package org.alten.product_management.infrastructure.adapter.output.db.mongodb.service;
 
 import org.alten.product_management.domain.exception.ResourceNotFoundException;
 import org.alten.product_management.domain.model.Product;
-import org.alten.product_management.domain.port.output.DeleteProductPort;
-import org.alten.product_management.infrastructure.adapter.output.db.mysql.entity.ProductEntity;
-import org.alten.product_management.infrastructure.adapter.output.db.mysql.mapper.ProductMapper;
-import org.alten.product_management.infrastructure.adapter.output.db.mysql.repository.ProductRepository;
-import org.springframework.cache.annotation.CacheEvict;
+import org.alten.product_management.infrastructure.adapter.output.db.mongodb.entity.ProductEntity;
+import org.alten.product_management.infrastructure.adapter.output.db.mongodb.mapper.ProductMapper;
+import org.alten.product_management.infrastructure.adapter.output.db.mongodb.repository.ProductRepository;
+import org.alten.product_management.infrastructure.adapter.output.db.service.DeleteProductService;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 import static org.alten.product_management.domain.constant.ProductConstant.PRODUCT_NOT_FOUND;
 
-@Component
-public class DeleteProductAdapter implements DeleteProductPort {
+@Component("DeleteProductFromMongoDB")
+public class DeleteProduct implements DeleteProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    public DeleteProductAdapter(ProductRepository productRepository,
-                                ProductMapper productMapper) {
+    public DeleteProduct(ProductRepository productRepository,
+                         ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
     }
 
     @Override
-    @CacheEvict(value = "users", key = "#productId")
-    public Product deleteProduct(Long productId) {
+    public Product deleteProduct(String productId) {
         if (productRepository.existsById(productId)) {
             Optional<ProductEntity> productEntity = productRepository.findById(productId);
             productRepository.deleteById(productId);

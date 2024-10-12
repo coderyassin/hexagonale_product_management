@@ -12,7 +12,7 @@ public class DeleteProductService implements DeleteProductUseCase {
     }
 
     @Override
-    public Product deleteProduct(Long productId) {
+    public Product deleteProduct(String productId) {
         try {
             return deleteProductPort.deleteProduct(productId);
         } catch (Exception e) {

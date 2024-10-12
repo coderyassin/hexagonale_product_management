@@ -15,7 +15,7 @@ public class ProductByIdService implements ProductByIdUseCase {
     }
 
     @Override
-    public Product productById(Long productId) {
+    public Product productById(String productId) {
         return productByIdPort.findById(productId)
                 .orElseThrow(() -> {
                     String message = String.format(PRODUCT_NOT_FOUND, productId);

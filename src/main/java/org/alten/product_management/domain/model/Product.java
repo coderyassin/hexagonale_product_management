@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Product implements Serializable {
-    private Long id;
+    private String id;
 
     private LocalDateTime createdAt;
 
@@ -34,11 +34,11 @@ public class Product implements Serializable {
 
     private Double rating;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

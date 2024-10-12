@@ -45,7 +45,7 @@ public class ProductController implements ProductApi {
     }
 
     @Override
-    public ResponseEntity<?> getProduct(Long productId) {
+    public ResponseEntity<?> getProduct(String productId) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(productByIdUseCase.productById(productId));
     }
@@ -61,7 +61,7 @@ public class ProductController implements ProductApi {
     }
 
     @Override
-    public ResponseEntity<?> updateProduct(UpdateProductRequest updateProductRequest, Long productId) {
+    public ResponseEntity<?> updateProduct(UpdateProductRequest updateProductRequest, String productId) {
         Product product = productMapper.toModel(updateProductRequest);
         Product productUpdated = updateProductUseCase.updateProduct(product, productId);
         UpdateProductResponse updateProductResponse = productMapper.toUpdateProductResponse(productUpdated);
@@ -71,7 +71,7 @@ public class ProductController implements ProductApi {
     }
 
     @Override
-    public ResponseEntity<?> deleteProduct(Long productId) {
+    public ResponseEntity<?> deleteProduct(String productId) {
         DeleteProductResponse deleteProductResponse =
                 productMapper.toDeleteProductResponse(deleteProductUseCase.deleteProduct(productId));
 
