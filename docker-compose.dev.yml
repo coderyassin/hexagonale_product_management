@@ -21,6 +21,7 @@ services:
       - .env_dev
     environment:
       SPRING_PROFILES_ACTIVE: ${PROFILE_ACTIVE}
+      APP_DATABASE: ${ACTIVE_DB}
       SPRING_DATASOURCE_URL: "jdbc:mysql://product-management-db-c1/${DB_NAME}"
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
@@ -35,6 +36,7 @@ services:
       - .env_dev
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      APP_DATABASE: ${ACTIVE_DB}
       SPRING_DATASOURCE_URL: "jdbc:mysql://product-management-db-c1/${DB_NAME}"
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
