@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -15,7 +17,12 @@ public class ProductEntityListener extends AbstractMongoEventListener<ProductEnt
 
     public void onBeforeConvert(BeforeConvertEvent<ProductEntity> event) {
         ProductEntity product = event.getSource();
-        if (product.getCreatedAt() == null) {
+
+        if (Objects.isNull(product.getId())) {
+           product.setId(UUID.randomUUID().toString());
+        }
+
+        if (Objects.isNull(product.getCreatedAt())) {
             product.setCreatedAt(LocalDateTime.now());
         }
         product.setUpdatedAt(LocalDateTime.now());
