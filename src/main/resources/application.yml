@@ -11,6 +11,10 @@ spring:
   data:
     mongodb:
       uri: "**************"
+      port: 27017
+      database: "**************"
+      username: "**************"
+      password: "**************"
     redis:
       host: "**************"
       port: 6379
