@@ -6,7 +6,7 @@ import org.alten.product_management.infrastructure.adapter.output.db.mongodb.ent
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("ProductMapperOfMongoDB")
 public class ProductMapperImpl implements ProductMapper {
     private final ModelMapper modelMapper;
 
