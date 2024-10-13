@@ -18,7 +18,7 @@ public class ProductEntityListener extends AbstractMongoEventListener<ProductEnt
     public void onBeforeConvert(BeforeConvertEvent<ProductEntity> event) {
         ProductEntity product = event.getSource();
 
-        if (Objects.isNull(product.getId())) {
+        if (Objects.isNull(product.getId()) || product.getId().equals("0")) {
            product.setId(UUID.randomUUID().toString());
         }
 
