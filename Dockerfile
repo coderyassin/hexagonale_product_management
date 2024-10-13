@@ -8,7 +8,7 @@ COPY ./src ./src
 FROM builder AS dev
 
 ARG ACTIVE_PROFILE=dev
-RUN mvn package -DskipTests
+RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=dev /app/target/*.jar /app/app.jar
@@ -19,7 +19,7 @@ ENTRYPOINT ["java", "-jar", "/app/app.jar"]
 FROM builder AS prod
 
 ARG ACTIVE_PROFILE=prod
-RUN mvn package
+RUN mvn clean package
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=prod /app/target/*.jar /app/app.jar
