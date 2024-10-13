@@ -8,7 +8,12 @@ RUN --mount=type=cache,target=/root/.m2 mvn dependency:go-offline -B
 
 COPY ./src ./src
 
-RUN mvn package -DskipTests
+ARG ACTIVE_PROFILE=dev
+
+RUN if [ "$ACTIVE_PROFILE" = dev ]; \
+    then mvn package; \
+    else mvn package -DskipTests; \
+    fi
 
 FROM eclipse-temurin:21-jre-alpine
 

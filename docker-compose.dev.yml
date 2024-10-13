@@ -34,6 +34,10 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
   product_management1:
+    build:
+      context: .
+      args:
+        ACTIVE_PROFILE: dev
     env_file:
       - .env_dev
     environment:
@@ -55,6 +59,10 @@ services:
       SPRING_DATA_MONGODB_PASSWORD: ${MONGODB_PASSWORD}
 
   product_management2:
+    build:
+      context: .
+      args:
+        ACTIVE_PROFILE: dev
     env_file:
       - .env_dev
     environment:
