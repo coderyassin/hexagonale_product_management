@@ -1,30 +1,30 @@
+# Build stage
 FROM maven:3.9.4-eclipse-temurin-21 AS builder
 
 WORKDIR /app
-COPY ./pom.xml ./
+COPY pom.xml .
 RUN --mount=type=cache,target=/root/.m2 mvn dependency:go-offline -B
-COPY ./src ./src
+COPY src ./src
 
+# Development stage
 FROM builder AS dev
 
-WORKDIR /app
 ARG ACTIVE_PROFILE=dev
-RUN mvn clean package -DskipTests
-FROM eclipse-temurin:21-jre-alpine
-WORKDIR /app
-COPY --from=dev /app/target/*.jar /app/app.jar
-RUN apk update && apk add --no-cache curl
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+RUN mvn clean package -DskipTests -P${ACTIVE_PROFILE}
 
+# Production stage
 FROM builder AS prod
 
-WORKDIR /app
 ARG ACTIVE_PROFILE=prod
-RUN mvn clean package
-FROM eclipse-temurin:21-jre-alpine
+RUN mvn clean package -P${ACTIVE_PROFILE}
+
+# Final stage
+FROM eclipse-temurin:21-jre-alpine AS final
+
 WORKDIR /app
-COPY --from=prod /app/target/*.jar /app/app.jar
+ARG ACTIVE_PROFILE
+COPY --from=${ACTIVE_PROFILE} /app/target/*.jar /app/app.jar
 RUN apk update && apk add --no-cache curl
+
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
