@@ -60,6 +60,7 @@ services:
 
   product_management2:
     build:
+      target: dev
       args:
         ACTIVE_PROFILE: dev
     env_file:

@@ -35,6 +35,7 @@ services:
 
   product_management1:
     build:
+      target: prod
       args:
         ACTIVE_PROFILE: prod
     env_file:
