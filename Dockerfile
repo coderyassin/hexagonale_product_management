@@ -10,7 +10,7 @@ COPY ./src ./src
 
 ARG ACTIVE_PROFILE=dev
 
-RUN if [ "$ACTIVE_PROFILE" = dev ]; \
+RUN if [ "$ACTIVE_PROFILE" = "dev" ]; \
     then mvn package -DskipTests; \
     else mvn package; \
     fi
