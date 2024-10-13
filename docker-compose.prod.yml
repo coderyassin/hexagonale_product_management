@@ -35,7 +35,6 @@ services:
 
   product_management1:
     build:
-      context: .
       args:
         ACTIVE_PROFILE: prod
     env_file:
@@ -60,7 +59,6 @@ services:
 
   product_management2:
     build:
-      context: .
       args:
         ACTIVE_PROFILE: prod
     env_file:
