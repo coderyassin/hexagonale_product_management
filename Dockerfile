@@ -11,7 +11,7 @@ ARG ACTIVE_PROFILE=dev
 RUN mvn package -DskipTests
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=builder /app/target/*.jar /app/app.jar
+COPY --from=dev /app/target/*.jar /app/app.jar
 RUN apk update && apk add --no-cache curl
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
@@ -22,7 +22,7 @@ ARG ACTIVE_PROFILE=prod
 RUN mvn package
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=builder /app/target/*.jar /app/app.jar
+COPY --from=prod /app/target/*.jar /app/app.jar
 RUN apk update && apk add --no-cache curl
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
