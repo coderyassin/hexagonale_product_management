@@ -35,6 +35,7 @@ services:
 
   product_management1:
     build:
+      target: dev
       args:
         ACTIVE_PROFILE: dev
     env_file:
