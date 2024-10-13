@@ -11,8 +11,8 @@ COPY ./src ./src
 ARG ACTIVE_PROFILE=dev
 
 RUN if [ "$ACTIVE_PROFILE" = dev ]; \
-    then mvn package; \
-    else mvn package -DskipTests; \
+    then mvn package -DskipTests; \
+    else mvn package; \
     fi
 
 FROM eclipse-temurin:21-jre-alpine
