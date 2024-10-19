@@ -1,0 +1,7 @@
+services:
+  product_management1:
+    image: yascodej/hexagonale_product_management:latest
+    pull_policy: always
+  product_management2:
+    image: yascodej/hexagonale_product_management:latest
+    pull_policy: always
