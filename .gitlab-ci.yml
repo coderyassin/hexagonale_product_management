@@ -4,17 +4,17 @@ include:
     ref: $CI_COMMIT_REF_NAME 
     file: 'ci-template.yml'
 
-# Job definition
-build:
-  extends: .build-template
-
-test:
-  extends: .test-template
-
-package:
-  extends: .package-template
-
-docker-build:
-  extends: .docker-template
-  only:
-    - main  # Runs only on the main branch
+# Job definition 
+build: 
+  extends: .build-template 
+ 
+test: 
+  extends: .test-template 
+ 
+package: 
+  extends: .package-template 
+ 
+docker-build: 
+  extends: .docker-template 
+  only: 
+    - main
