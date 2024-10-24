@@ -1,0 +1,76 @@
+# Default configuration shared by all jobs
+default:
+  tags:
+    - docker
+  image: maven:3.9.4-eclipse-temurin-21  # Maven with JDK 21
+
+# Global variables
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: "tcp://docker:2375"
+  DOCKER_BUILDKIT: "1"
+
+# =Pipeline stages
+stages:
+  - build
+  - test
+  - package
+  - docker
+
+# Jobs templates
+.build-template:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS clean compile
+
+.test-template:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+
+.package-template:
+  stage: package
+  script:
+    - mvn $MAVEN_CLI_OPTS package -DskipTests
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 1 week
+
+.docker-template: 
+  stage: docker
+  image: docker:20.10.16
+  services:
+    - name: docker:20.10.16-dind
+      alias: docker
+      command: ["--tls=false"]
+  before_script:
+    # Secure Docker Login
+    - |
+      echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    # Simple check of Docker availability
+    - |
+      for i in $(seq 1 30); do
+        if docker info > /dev/null 2>&1; then
+          echo "Docker est prêt!"
+          break
+        fi
+        echo "Attente de Docker... ($i/30)"
+        sleep 1
+      done
+  script:
+    # Utilisation de buildx pour le build
+    - docker buildx create --use
+    - docker buildx inspect --bootstrap
+    - |
+      docker buildx build \
+        --push \
+        --cache-from type=registry,ref=$CI_REGISTRY_IMAGE:cache \
+        --cache-to type=registry,ref=$CI_REGISTRY_IMAGE:cache,mode=max \
+        --target dev-final \
+        --build-arg ACTIVE_PROFILE=dev \
+        --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA \
+        --tag $CI_REGISTRY_IMAGE:latest \
+        .
